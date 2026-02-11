@@ -15,12 +15,12 @@ public class Player
         this.zsetonok = zsetonok;
     }
 
-    public void Nyer(int osszeg)
+    public void Nyer(double osszeg)
     {
         this.zsetonok += osszeg;
     }
 
-    public void Veszit(int osszeg)
+    public void Veszit(double osszeg)
     {
         this.zsetonok -= osszeg;
     }
@@ -66,8 +66,6 @@ public class Player
             }
         } while(!jo);
         
-        
-
         return bet;
     }
 
