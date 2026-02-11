@@ -2,9 +2,12 @@
 
 public class Player
 {
+    private bool vesztett;
     private double zsetonok;
     private double legmagasabbZsetonok;
 
+    public bool Vesztett => vesztett;
+    
     public double LegmagasabbZsetonok => legmagasabbZsetonok;
 
     public double Zsetonok
@@ -16,7 +19,8 @@ public class Player
             {
                 legmagasabbZsetonok = value;
             }
-            
+
+            vesztett = vesztett || value <= 0;
             zsetonok = value;
         }
     }
