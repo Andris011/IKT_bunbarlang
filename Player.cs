@@ -69,7 +69,7 @@ public class Player
             
             bet = SafeGetBet();
             
-            if (bet >= zsetonok)
+            if (bet > zsetonok)
             {
                 Console.WriteLine("Nincs ennyi pénze, adjon meg egy másik összeget: ");
                 jo = false;
