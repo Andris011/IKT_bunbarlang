@@ -3,16 +3,28 @@
 public class Player
 {
     private double zsetonok;
+    private double legmagasabbZsetonok;
+
+    public double LegmagasabbZsetonok => legmagasabbZsetonok;
 
     public double Zsetonok
     {
         get => zsetonok;
-        set => zsetonok = value;
+        set
+        {
+            if (value > legmagasabbZsetonok)
+            {
+                legmagasabbZsetonok = value;
+            }
+            
+            zsetonok = value;
+        }
     }
 
     public Player(int zsetonok)
     {
         this.zsetonok = zsetonok;
+        this.legmagasabbZsetonok = zsetonok;
     }
 
     public void Nyer(double osszeg)
