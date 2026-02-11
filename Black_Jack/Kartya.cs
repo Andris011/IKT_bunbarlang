@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IKT_bunbarlang.Black_Jack
 {
-    internal class Kartya
+    public class Kartya
     {
         private string nev;
         private string szin;
@@ -25,7 +25,7 @@ namespace IKT_bunbarlang.Black_Jack
 
         public override string ToString()
         {
-            return $"{this.szin} {this.nev}";
+            return $"{this.nev}";
         }
     }
 }
