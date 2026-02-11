@@ -20,7 +20,7 @@ public class Player
                 legmagasabbZsetonok = value;
             }
 
-            vesztett = vesztett || value <= 0;
+            vesztett = value <= 0;
             zsetonok = value;
         }
     }
