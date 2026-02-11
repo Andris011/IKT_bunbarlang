@@ -721,7 +721,7 @@ public class Rulette
                     break;
             }
 
-            if (player.Vesztett)
+            if (player.Vesztett && bets.Count == 0)
             {
                 opcio = 2;
             }
