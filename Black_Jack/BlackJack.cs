@@ -104,7 +104,7 @@ public class BlackJack
             kartyakeveres();
 
                 double tet = player.Zsetonok + 1;
-                while (tet > player.Zsetonok)
+                while (tet > player.Zsetonok || tet <= 0)
                 {
                     Console.Clear();
                     Console.WriteLine($"Zsetonjaid száma: {player.Zsetonok}");
@@ -115,6 +115,13 @@ public class BlackJack
                         Console.Clear();
                         Console.WriteLine("Nincs elegendő zsetonod!");
                         Thread.Sleep(500);
+                        Console.Clear();
+                    }
+                    if (tet <= 0)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("A tét magasabb kell hogy legyen nullánál!");
+                        Thread.Sleep(1500);
                         Console.Clear();
                     }
                 }
