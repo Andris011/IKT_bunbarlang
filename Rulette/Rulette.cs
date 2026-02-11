@@ -417,11 +417,11 @@ public class Rulette
     public static RuletteBet? ParseBet(string bet)
     {
         string[] arguments = bet.Split(' ');
-        int betAmount = 0;
+        double betAmount = 0;
 
-        if (arguments.Length > 2 && IsArgNumber(arguments[0]) && (arguments[1] == "a" || arguments[1] == "on"))
+        if (arguments.Length > 2 && double.TryParse(arguments[0], out _) && (arguments[1] == "a" || arguments[1] == "on"))
         {
-            betAmount = int.Parse(arguments[0]);
+            betAmount = double.Parse(arguments[0]);
             arguments = arguments.Skip(2).ToArray();
         }
 
@@ -504,7 +504,7 @@ public class Rulette
                 if (!IsArgNumber(arguments[1])) return null;
 
                 int columnNumber = int.Parse(arguments[1]) - 1;
-                if (columnNumber < 0 || columnNumber > 3) return null;
+                if (columnNumber < 0 || columnNumber > 2) return null;
 
                 return RuletteBet.ColumnBet(columnNumber, betAmount);
 
@@ -566,7 +566,7 @@ public class Rulette
         return arr;
     }
 
-    public static RuletteBet? PlaceBet(List<RuletteBet> bets, int balance)
+    public static RuletteBet? PlaceBet(List<RuletteBet> bets, double balance)
     {
         ConsoleKeyInfo key;
         string enteredCommand = "";
@@ -606,7 +606,7 @@ public class Rulette
                     return null;
                 }
             }
-            else if (char.IsLetterOrDigit(key.KeyChar) || key.KeyChar == ' ')
+            else if (char.IsLetterOrDigit(key.KeyChar) || key.KeyChar == ' ' || key.KeyChar == ',')
             {
                 enteredCommand += key.KeyChar;
             }
@@ -651,7 +651,7 @@ public class Rulette
         } while (true);
     }
 
-    public static int Porgetes(List<RuletteBet> bets)
+    public static double Porgetes(List<RuletteBet> bets)
     {
         Random random = new Random();
 
@@ -721,8 +721,8 @@ public class Rulette
 
         int winningParsed = winningNumber == "00" ? -1 : int.Parse(winningNumber);
 
-        int wonAmount = 0;
-        int lostAmount = 0;
+        double wonAmount = 0;
+        double lostAmount = 0;
 
         int allBetCount = bets.Count;
         int wonBetCount = 0;
@@ -740,7 +740,7 @@ public class Rulette
             }
         }
 
-        int profits = wonAmount - lostAmount;
+        double profits = wonAmount - lostAmount;
 
         Console.Clear();
 

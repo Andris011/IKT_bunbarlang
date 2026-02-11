@@ -4,14 +4,14 @@ public class RuletteBet
 {
     private int[] squares;
     private int payout;
-    private int amount;
+    private double amount;
 
     public int Payout
     {
         get => payout;
     }
 
-    public int Amount
+    public double Amount
     {
         get => amount;
     }
@@ -26,24 +26,24 @@ public class RuletteBet
         get => squares;
     }
 
-    private RuletteBet(int[] squares, int payout, int amount)
+    private RuletteBet(int[] squares, int payout, double amount)
     {
         this.squares = squares;
         this.payout = payout;
         this.amount = amount;
     }
 
-    public static RuletteBet StraightUpBet(int square, int amount)
+    public static RuletteBet StraightUpBet(int square, double amount)
     {
         return new RuletteBet(new int[] { square }, 35, amount);
     }
 
-    public static RuletteBet SplitBet(int square1, int square2, int amount)
+    public static RuletteBet SplitBet(int square1, int square2, double amount)
     {
         return new RuletteBet(new int[] { square1, square2 }, 17, amount);
     }
 
-    public static RuletteBet StreetBet(int street, int amount)
+    public static RuletteBet StreetBet(int street, double amount)
     {
         int[] squares = new int[3];
 
@@ -55,7 +55,7 @@ public class RuletteBet
         return new RuletteBet(squares, 11, amount);
     }
 
-    public static RuletteBet DoubleStreetBet(int street, int amount)
+    public static RuletteBet DoubleStreetBet(int street, double amount)
     {
         int[] squares = new int[6];
         int index = 0;
@@ -71,7 +71,7 @@ public class RuletteBet
         return new RuletteBet(squares, 5, amount);
     }
 
-    public static RuletteBet CornerBet(int topLeftCorner, int amount)
+    public static RuletteBet CornerBet(int topLeftCorner, double amount)
     {
         int[] squares = new int[4];
         int row = topLeftCorner / 12;
@@ -85,7 +85,7 @@ public class RuletteBet
         return new RuletteBet(squares, 8, amount);
     }
 
-    public static RuletteBet ColumnBet(int row, int amount)
+    public static RuletteBet ColumnBet(int row, double amount)
     {
         int[] squares = new int[12];
 
@@ -97,7 +97,7 @@ public class RuletteBet
         return new RuletteBet(squares, 2, amount);
     }
 
-    public static RuletteBet DozenBet(int third, int amount)
+    public static RuletteBet DozenBet(int third, double amount)
     {
         int[] squares = new int[3 * 4];
         int index = 0;
@@ -110,7 +110,7 @@ public class RuletteBet
         return new RuletteBet(squares, 2, amount);
     }
 
-    public static RuletteBet HalfBet(int half, int amount)
+    public static RuletteBet HalfBet(int half, double amount)
     {
         int[] squares = new int[3 * 6];
         int index = 0;
@@ -123,7 +123,7 @@ public class RuletteBet
         return new RuletteBet(squares, 1, amount);
     }
 
-    public static RuletteBet ParityBet(bool even, int amount)
+    public static RuletteBet ParityBet(bool even, double amount)
     {
         int[] squares = new int[18];
         int index = 0;
@@ -137,7 +137,7 @@ public class RuletteBet
         return new RuletteBet(squares, 1, amount);
     }
 
-    public static RuletteBet ColorBet(bool red, int amount)
+    public static RuletteBet ColorBet(bool red, double amount)
     {
         int[] squares = new int[18];
         int index = 0;
@@ -157,7 +157,7 @@ public class RuletteBet
         return new RuletteBet(squares, 1, amount);
     }
 
-    public static RuletteBet SnakeBet(int amount)
+    public static RuletteBet SnakeBet(double amount)
     {
         return new RuletteBet(new int[] { 1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34 }, 2, amount);
     }
