@@ -16,6 +16,19 @@ public class MainMenu
                                             ░         ░              ░  ░            ░  ░   ░         ░  ░     ░  ░         ░       ░
                                            """;
 
+    private static string gameOverLogo = """
+                                          ██▒   █▓▓█████   ██████ ▒███████▒▄▄▄█████▓▓█████▄▄▄█████▓▄▄▄█████▓▓█████  ██▓    
+                                         ▓██░   █▒▓█   ▀ ▒██    ▒ ▒ ▒ ▒ ▄▀░▓  ██▒ ▓▒▓█   ▀▓  ██▒ ▓▒▓  ██▒ ▓▒▓█   ▀ ▓██▒    
+                                          ▓██  █▒░▒███   ░ ▓██▄   ░ ▒ ▄▀▒░ ▒ ▓██░ ▒░▒███  ▒ ▓██░ ▒░▒ ▓██░ ▒░▒███   ▒██░    
+                                           ▒██ █░░▒▓█  ▄   ▒   ██▒  ▄▀▒   ░░ ▓██▓ ░ ▒▓█  ▄░ ▓██▓ ░ ░ ▓██▓ ░ ▒▓█  ▄ ▒██░    
+                                            ▒▀█░  ░▒████▒▒██████▒▒▒███████▒  ▒██▒ ░ ░▒████▒ ▒██▒ ░   ▒██▒ ░ ░▒████▒░██████▒
+                                            ░ ▐░  ░░ ▒░ ░▒ ▒▓▒ ▒ ░░▒▒ ▓░▒░▒  ▒ ░░   ░░ ▒░ ░ ▒ ░░     ▒ ░░   ░░ ▒░ ░░ ▒░▓  ░
+                                            ░ ░░   ░ ░  ░░ ░▒  ░ ░░░▒ ▒ ░ ▒    ░     ░ ░  ░   ░        ░     ░ ░  ░░ ░ ▒  ░
+                                              ░░     ░   ░  ░  ░  ░ ░ ░ ░ ░  ░         ░    ░        ░         ░     ░ ░   
+                                               ░     ░  ░      ░    ░ ░                ░  ░                    ░  ░    ░  ░
+                                              ░                   ░                                                        
+                                         """;
+    
     private static int logoWidth = StringUtil.StringLength(bunbarlangLogo.Split('\n')[0]);
 
     private static string GetGameCard(int width, int height, int lineWithText, string text)
@@ -116,6 +129,14 @@ public class MainMenu
         }
     }
 
+    public static void GameOverScreen()
+    {
+        Console.WriteLine(new string('\n', 250));
+        TimedConsoleWrite(250, StringUtil.CenterMultiLine(Console.WindowWidth, gameOverLogo));
+        Console.WriteLine(new string('\n', 10));
+        Thread.Sleep(1000);
+    }
+
     public static void Show()
     {
         Console.WriteLine("Köszöntelek a bűnbarlangban!");
@@ -191,6 +212,13 @@ public class MainMenu
                     }
 
                     break;
+            }
+            
+            
+            if (player.Vesztett)
+            {
+                running = false;
+                GameOverScreen();
             }
         } while (running);
     }

@@ -720,6 +720,11 @@ public class Rulette
 
                     break;
             }
+
+            if (player.Vesztett && bets.Count == 0)
+            {
+                opcio = 2;
+            }
         } while (opcio != 2);
     }
 }

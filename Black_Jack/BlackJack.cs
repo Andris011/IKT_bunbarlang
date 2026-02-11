@@ -414,6 +414,7 @@ public class BlackJack
                         vege=true;
                         break;
                 }
+                vege = vege || player.Vesztett;
         }
     }
 }
