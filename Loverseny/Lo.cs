@@ -2,15 +2,24 @@
 
 public class Lo
 {
+    private int _id;
     private string _name;
     private string _age;
     private string _rider;
+    private double _szorzo;
 
-    public Lo(string name, string age, string rider)
+    public Lo(int id, string name, string age, string rider)
     {
+        _id = id;
         _name = name;
         _age = age;
         _rider = rider;
+    }
+
+    public int Id
+    {
+        get => _id;
+        set => _id = value;
     }
 
     public string Name
@@ -31,8 +40,30 @@ public class Lo
         set => _rider = value ?? throw new ArgumentNullException(nameof(value));
     }
 
+    public double Szorzo => _szorzo;
+
+
+    public void SzorzoHozzaadasa()
+    {
+        Random rnd = new Random();
+
+
+        _szorzo = Math.Round(rnd.NextDouble() * (5.01-1.01) + 1.01, 2);
+
+    }
+
+
+    public void NyertesSzorzoHozzaadasa()
+    {
+        Random rnd = new Random();
+
+
+        _szorzo = Math.Round(rnd.NextDouble() * (2.01-1.01) + 1.01, 2);
+    }
+
     override public string ToString()
     {
-        return $"Név: {_name}, kor: {_age}, zsoké: {_rider}";
+        return $"{_id} | név: {_name}, születési év: {_age}, zsoké: {_rider}, szorzó: {_szorzo}";
+        // return $"{_id, 2} | {_name,-20} | {_szorzo,5:F2} | {_rider}";
     }
 }
