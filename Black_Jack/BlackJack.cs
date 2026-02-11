@@ -103,7 +103,7 @@ public class BlackJack
         {
             kartyakeveres();
 
-                double tet = player.Zsetonok + 1;
+                double tet = player.Tet();
                 while (tet > player.Zsetonok || tet <= 0)
                 {
                     Console.Clear();
