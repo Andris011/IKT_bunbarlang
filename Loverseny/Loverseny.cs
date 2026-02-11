@@ -99,13 +99,20 @@ public class Loverseny
                 Console.WriteLine($"Egyenlege {player.Zsetonok}");
             }
 
-            Console.WriteLine();
-            Console.WriteLine("Nyomj entert ha szeretnél még játszani, backspace-et ha nem!");
-            
-            switch (Console.ReadKey(true).Key)
+            if (!player.Vesztett)
             {
-                case ConsoleKey.Backspace: kilepes = true; break;
-                case ConsoleKey.Enter: kilepes = false; break;
+                Console.WriteLine();
+                Console.WriteLine("Nyomj entert ha szeretnél még játszani, backspace-et ha nem!");
+
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.Backspace: kilepes = true; break;
+                    case ConsoleKey.Enter: kilepes = false; break;
+                }
+            }
+            else
+            {
+                kilepes = true;
             }
         } while (!kilepes);
     }
