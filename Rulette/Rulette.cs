@@ -1,4 +1,6 @@
-﻿namespace IKT_bunbarlang.Rulette;
+﻿using IKT_bunbarlang.Utility;
+
+namespace IKT_bunbarlang.Rulette;
 
 public class Rulette
 {
@@ -9,93 +11,6 @@ public class Rulette
         "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1",
         "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2"
     };
-
-    private static int StringLength(string text)
-    {
-        int length = 0;
-
-        for (int i = 0; i < text.Length; i++)
-        {
-            if (text[i] == '\x1B')
-            {
-                for (; i < text.Length && text[i] != 'm'; i++)
-                {
-                }
-            }
-            else
-            {
-                length++;
-            }
-        }
-
-        return length;
-    }
-
-    private static string CenterString(int length, string content)
-    {
-        return CenterString(length, content, true);
-    }
-
-    private static string CenterString(int length, string content, bool addRight)
-    {
-        int contentLength = StringLength(content);
-        if (contentLength > length)
-        {
-            return content;
-        }
-
-        string right = new string(' ', (length - contentLength) / 2);
-        string output = new string(' ', length - right.Length - contentLength) + content;
-
-        if (addRight)
-        {
-            output += right;
-        }
-
-        return output;
-    }
-
-    private static string PadRightString(int length, string content)
-    {
-        int contentLength = StringLength(content);
-
-        if (contentLength > length)
-        {
-            return content;
-        }
-
-        return content + new string(' ', length - contentLength);
-    }
-
-    private static string PadLeftString(int length, string content)
-    {
-        int contentLength = StringLength(content);
-
-        if (contentLength > length)
-        {
-            return content;
-        }
-
-        return new string(' ', length - contentLength) + content;
-    }
-
-    private static string CenterMultiLine(int length, string content)
-    {
-        string output = "";
-        string[] lines = content.Split('\n');
-
-        for (int i = 0; i < lines.Length; i++)
-        {
-            if (i > 0)
-            {
-                output += '\n';
-            }
-
-            output += CenterString(length, lines[i]);
-        }
-
-        return output;
-    }
 
     private static int[] GetColumnMaxLengths(string[,] board, int minCellWidth)
     {
@@ -110,7 +25,7 @@ public class Rulette
         {
             for (int j = 0; j < board.GetLength(1); j++)
             {
-                maxLengths[j] = Math.Max(maxLengths[j], StringLength(board[i, j]));
+                maxLengths[j] = Math.Max(maxLengths[j], StringUtil.StringLength(board[i, j]));
             }
         }
 
@@ -187,7 +102,7 @@ public class Rulette
                 }
 
                 currentCell[0] += $"{lines}{topRight}";
-                currentCell[1] += $" {CenterString(maxLengths[j], board[i, j])} │";
+                currentCell[1] += $" {StringUtil.CenterString(maxLengths[j], board[i, j])} │";
                 currentCell[2] += $"{lines}{bottomRight}";
 
                 currentRow[j, 0] = currentCell[0];
@@ -210,28 +125,6 @@ public class Rulette
 
             output += built[1] + "\n";
             output += built[2] + "\n";
-        }
-
-        return output;
-    }
-
-    private static string IndentString(string content, int indentSize)
-    {
-        string output = "";
-        string indent = new string(' ', indentSize);
-        string[] lines = content.Split('\n');
-
-        for (int i = 0; i < lines.Length; i++)
-        {
-            if (i > 0)
-            {
-                output += '\n';
-            }
-
-            if (lines[i] != "")
-            {
-                output += indent + lines[i];
-            }
         }
 
         return output;
@@ -349,7 +242,7 @@ public class Rulette
                 length--;
             }
 
-            boardSixths[0, i] = CenterString(length, boardSixths[0, i]);
+            boardSixths[0, i] = StringUtil.CenterString(length, boardSixths[0, i]);
         }
 
         board[0, 13] = "2 : 1";
@@ -357,56 +250,8 @@ public class Rulette
         board[2, 13] = "2 : 1";
 
         return DrawBoard(board, 2) +
-               IndentString(DrawBoard(boardThirds, 17), 5) +
-               IndentString(DrawBoard(boardSixths, 0), 5);
-    }
-
-    private static string CombineMultiLine(string first, string second, string joiner)
-    {
-        string[] linesFirst = first.Split('\n');
-        string[] linesSecond = second.Split('\n');
-
-        int maxLength = Math.Max(linesFirst.Length, linesSecond.Length);
-
-        string combined = "";
-
-        for (int i = 0; i < maxLength; i++)
-        {
-            if (i > 0) combined += '\n';
-            if (i < linesFirst.Length) combined += linesFirst[i];
-            if (i < linesSecond.Length) combined += joiner + linesSecond[i];
-        }
-
-        return combined;
-    }
-
-    private static (string, string) StringsEqualWidth(string first, string second)
-    {
-        string[] linesFirst = first.Split('\n');
-        string[] linesSecond = second.Split('\n');
-
-        int maxLength = Math.Max(linesFirst.Length, linesSecond.Length);
-        int maxWidth = 0;
-
-        for (int i = 0; i < maxLength; i++)
-        {
-            if (i < linesFirst.Length) maxWidth = Math.Max(maxWidth, StringLength(linesFirst[i]));
-            if (i < linesSecond.Length) maxWidth = Math.Max(maxWidth, StringLength(linesSecond[i]));
-        }
-
-        string stringFirst = "";
-        string stringSecond = "";
-
-        for (int i = 0; i < maxLength; i++)
-        {
-            if (i > 0 && i < linesFirst.Length) stringFirst += '\n';
-            if (i > 0 && i < linesSecond.Length) stringSecond += '\n';
-
-            if (i < linesFirst.Length) stringFirst += PadRightString(maxWidth, linesFirst[i]);
-            if (i < linesSecond.Length) stringSecond += PadRightString(maxWidth, linesSecond[i]);
-        }
-
-        return (stringFirst, stringSecond);
+               StringUtil.IndentString(DrawBoard(boardThirds, 17), 5) +
+               StringUtil.IndentString(DrawBoard(boardSixths, 0), 5);
     }
 
     public static bool IsArgNumber(string arg)
@@ -576,19 +421,19 @@ public class Rulette
 
         do
         {
-            (string table, _) = StringsEqualWidth(TableDrawing(selectedSquares), "");
-            string combined = CombineMultiLine(table,
+            (string table, _) = StringUtil.StringsEqualWidth(TableDrawing(selectedSquares), "");
+            string combined = StringUtil.CombineMultiLine(table,
                 $"=== Fogadás ({balance} zseton) ===\n> {enteredCommand}\n{new string(' ', enteredCommand.Length + 2)}{shownOutput}",
                 "  ");
-            (combined, _) = StringsEqualWidth(combined, "");
+            (combined, _) = StringUtil.StringsEqualWidth(combined, "");
 
-            string output = CenterMultiLine(Console.WindowWidth, combined);
+            string output = StringUtil.CenterMultiLine(Console.WindowWidth, combined);
             string[] outputLines = output.Split('\n');
 
             int spaceAtEnd = enteredCommand.Length - enteredCommand.TrimEnd().Length;
             int spaceBeginning = enteredCommand.Length == 0 ? 1 : 0;
 
-            int cursorPosition = StringLength(outputLines[1].TrimEnd()) + spaceAtEnd + spaceBeginning;
+            int cursorPosition = StringUtil.StringLength(outputLines[1].TrimEnd()) + spaceAtEnd + spaceBeginning;
 
             Console.WriteLine($"\x1B[H{output}");
             Console.Write($"\x1B[{outputLines.Length - 1}A\x1B[{cursorPosition}C");
@@ -691,16 +536,16 @@ public class Rulette
                 {
                     winningNumber = wheelNumbers[rightIndex];
                     padRight = $" {ball}";
-                    padLeft = new string(' ', StringLength(padRight));
+                    padLeft = new string(' ', StringUtil.StringLength(padRight));
                 }
                 else if (ballOffset >= 19 && i == ballOffset - 19)
                 {
                     winningNumber = wheelNumbers[leftIndex];
                     padLeft = $"{ball} ";
-                    padRight = new string(' ', StringLength(padLeft));
+                    padRight = new string(' ', StringUtil.StringLength(padLeft));
                 }
 
-                Console.WriteLine(CenterString(Console.WindowWidth,
+                Console.WriteLine(StringUtil.CenterString(Console.WindowWidth,
                     $"{padLeft}{leftNumber}{space}{rightNumber}{padRight}"));
             }
 
@@ -769,12 +614,12 @@ public class Rulette
                            $"-{lostAmount} vesztett zseton\n\n" +
                            $"Összesítve: {profits} zseton\n";
 
-        (table, _) = StringsEqualWidth(table, "");
+        (table, _) = StringUtil.StringsEqualWidth(table, "");
 
-        string output = CombineMultiLine(table, betsDrawn, "  ");
-        (output, _) = StringsEqualWidth(output, "");
+        string output = StringUtil.CombineMultiLine(table, betsDrawn, "  ");
+        (output, _) = StringUtil.StringsEqualWidth(output, "");
 
-        Console.WriteLine(CenterMultiLine(Console.WindowWidth, output));
+        Console.WriteLine(StringUtil.CenterMultiLine(Console.WindowWidth, output));
         Console.ReadKey(true);
 
         return wonAmount;
@@ -828,13 +673,13 @@ public class Rulette
                 betsDrawn += "\n" + bets[i];
             }
 
-            (table, _) = StringsEqualWidth(table, "");
+            (table, _) = StringUtil.StringsEqualWidth(table, "");
 
-            string output = CombineMultiLine(table, betsDrawn, "  ");
-            (output, _) = StringsEqualWidth(output, "");
+            string output = StringUtil.CombineMultiLine(table, betsDrawn, "  ");
+            (output, _) = StringUtil.StringsEqualWidth(output, "");
 
             Console.Clear();
-            Console.WriteLine(CenterMultiLine(Console.WindowWidth, output));
+            Console.WriteLine(StringUtil.CenterMultiLine(Console.WindowWidth, output));
 
             opcio = Menu.ValasztasLista(opciok.ToList());
 
