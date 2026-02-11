@@ -108,8 +108,5 @@ public class Loverseny
                 case ConsoleKey.Enter: kilepes = false; break;
             }
         } while (!kilepes);
-        
-        MainMenu.Show();
-
     }
 }
