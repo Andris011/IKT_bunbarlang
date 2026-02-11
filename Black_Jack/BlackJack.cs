@@ -89,6 +89,7 @@ public class BlackJack
             Szabályok:
               - 6 pakli francia kártyával játszva
               - Osztó mindenképp húz 16-ra és megáll 17-nél
+              - Blackjack esetén 3:2 kifizetési arány
 
             (Nyomj egy gombot a folytatáshoz)
 
@@ -102,7 +103,7 @@ public class BlackJack
         {
             kartyakeveres();
 
-                int tet = player.Zsetonok + 1;
+                double tet = player.Zsetonok + 1;
                 while (tet > player.Zsetonok)
                 {
                     Console.Clear();
@@ -270,7 +271,7 @@ public class BlackJack
                     Thread.Sleep(500);
                     Console.WriteLine("Nyertél!");
                     Console.WriteLine();
-                    player.Zsetonok += tet;
+                    player.Zsetonok += tet*1.5;
                     Thread.Sleep(500);
                 }
                 if (kartyakerteke(playerkartyai)>21)
