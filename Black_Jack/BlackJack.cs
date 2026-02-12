@@ -34,18 +34,20 @@ public class BlackJack
             }
         }
 
-        for (int i = 0; i < 6; i++)
+        List<Kartya> p = new List<Kartya>(pakli);
+        p.AddRange(pakli);
+        p.AddRange(pakli);
+        p.AddRange(pakli);
+        p.AddRange(pakli);
+        p.AddRange(pakli);
+
+        while (p.Count > 0)
         {
-            List<Kartya> p = new List<Kartya>(pakli);
-
-            while (p.Count > 0)
-            {
-                int index = r.Next(p.Count);
-                kevertPakli.Add((Kartya)p[index]);
-                p.RemoveAt(index);
-            }
+            int index = r.Next(p.Count);
+            kevertPakli.Add((Kartya)p[index]);
+            p.RemoveAt(index);
         }
-
+        
         /*foreach (Kartya kartya in kevertPakli)
         {
             Console.WriteLine(kartya);
@@ -104,6 +106,7 @@ public class BlackJack
             kartyakeveres();
 
                 double tet = player.SafeGetBet();
+                
                 while (tet > player.Zsetonok || tet <= 0)
                 {
                     Console.Clear();
