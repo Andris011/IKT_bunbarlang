@@ -7,6 +7,7 @@ public class Lo
     private string _age;
     private string _rider;
     private double _szorzo;
+    private int _sebesseg;
 
     public Lo(int id, string name, string age, string rider)
     {
@@ -52,6 +53,11 @@ public class Lo
 
     }
 
+    public int Sebesseg
+    {
+        get => _sebesseg;
+        set => _sebesseg = value;
+    }
 
     public void NyertesSzorzoHozzaadasa()
     {

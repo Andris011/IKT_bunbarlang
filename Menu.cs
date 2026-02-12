@@ -20,11 +20,13 @@ public class Menu
             switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.UpArrow:
-                    valasztas = Math.Max(0, valasztas - 1);
+                    // valasztas = Math.Max(0, valasztas - 1);
+                    valasztas = (valasztas - 1 + opciok.Count()) % opciok.Count();
                     break;
 
                 case ConsoleKey.DownArrow:
-                    valasztas = Math.Min(opciok.Count() - 1, valasztas + 1);
+                    valasztas = (valasztas + 1) % opciok.Count();
+                    // valasztas = Math.Min(opciok.Count() - 1, valasztas + 1);
                     break;
 
                 case ConsoleKey.Enter:

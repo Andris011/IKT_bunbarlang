@@ -59,10 +59,49 @@ public class Loverseny
             i++;
         }
     }
+
+    public static void Race(int nyertes)
+    {
+        
+        Random rnd = new Random();
+        
+        List<double> tavok = new List<double>();
+
+        foreach (var lo in lovak)
+        {
+            lo.Sebesseg = rnd.Next(8, 20);
+            tavok.Add(0);
+        }
+        
+        lovak[nyertes].Sebesseg = 21;
+
+        double legmesszebb = 0;
+        
+        do
+        {
+            Console.Clear();
+            for (int i = 0; i < lovak.Count(); i++)
+            {
+                tavok[i] += lovak[i].Sebesseg;
+                
+                legmesszebb = Math.Max(legmesszebb, tavok[i]);
+                
+                double szazalek = tavok[i] / 1000;
+
+                string vonalak = new string('=', (int)(szazalek * 50));
+                string ures = new string(' ', 50 - vonalak.Length);
+                
+                Console.WriteLine($"{vonalak}{ures} || {lovak[i].Name}");
+            }
+        
+            Thread.Sleep(100);
+        } while (legmesszebb < 1000);
+    }
     
     
     public static void Play(Player player)
     {   
+        
         Console.Clear();
         Random rnd = new Random();
         LovakKiirasa();
@@ -70,6 +109,8 @@ public class Loverseny
         bool kilepes = false;
         do
         {
+            Console.Clear();
+            
             foreach (Lo elem in lovak)
             {
                 elem.SzorzoHozzaadasa();
@@ -78,6 +119,9 @@ public class Loverseny
             int nyertes = rnd.Next(0, 10);
             
             lovak[nyertes].NyertesSzorzoHozzaadasa();
+            
+        Console.WriteLine(lovak[nyertes]);
+            
 
             // Console.WriteLine(lovak[nyertes].ToString());
             
@@ -86,6 +130,7 @@ public class Loverseny
             double bet = player.Tet();
             
             Animacio();
+            Race(nyertes);
             
             if (nyertes == valasztas) {
                 player.Nyer(bet * lovak[nyertes].Szorzo);
