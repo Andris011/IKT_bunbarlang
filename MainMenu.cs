@@ -129,20 +129,50 @@ public class MainMenu
         }
     }
 
-    public static void GameOverScreen()
+    public static bool GameOverScreen()
     {
         Console.WriteLine(new string('\n', 250));
         TimedConsoleWrite(250, StringUtil.CenterMultiLine(Console.WindowWidth, gameOverLogo));
-        Console.WriteLine(new string('\n', 10));
+        Console.WriteLine(new string('\n', 6));
         Thread.Sleep(1000);
+
+        
+        Console.WriteLine(StringUtil.CenterString(Console.WindowWidth, "Felveszel egy jelzálogot a házadra, vagy gyerekeid egyetemi pénzét játszod el?"));
+        
+        string[] opciok = { "Jelzálog", "Egyetemi pénz", "Kilépés"};
+        int valasz = Menu.ValasztasLista(opciok.ToList());
+
+        switch (valasz)
+        {
+            case 0: 
+            case 1:
+                return true;
+            default:
+                return false;
+        }
     }
 
+    public static void FakeMenu()
+    {
+        string[] valaszok = { "Lóverseny", "Roulette", "Black Jack", "Kilépés" };
+        string valasz;
+        
+        do
+        {
+            Console.Write("Írja be a játék nevét (Lóverseny, Roulette, Black Jack vagy Kilépés): ");
+            valasz = Console.ReadLine();    
+            
+            if (!valaszok.Contains(valasz)) Console.WriteLine("Hibás input");
+        } while (!valaszok.Contains(valasz));
+        
+    }
+    
     public static void Show()
     {
         Console.WriteLine("Köszöntelek a bűnbarlangban!");
         Console.WriteLine("Nyomj meg bármilyen gombot a kezdéshez!");
         Console.ReadKey(true);
-        Console.Write("Írja be a játék nevét (Lóverseny, Rulett, Black Jack vagy Kilépés): ");
+        FakeMenu();
         Thread.Sleep(2000);
         Console.WriteLine("\nVicc volt, jöhet az igazi menü?");
         Thread.Sleep(2000);
@@ -150,9 +180,8 @@ public class MainMenu
 
         Player player = new Player(10000);
 
-        string[] menuOpciok = { "Lóverseny", "Rulett", "Black Jack", "Adatok", "Kilépés" };
+        string[] menuOpciok = { "Lóverseny", "Roulett", "Black Jack", "Adatok", "Kilépés" };
 
-        int firstLoadTime = 200;
         bool firstLoad = true;
 
         bool running = true;
@@ -189,7 +218,7 @@ public class MainMenu
                             break;
 
                         case 1:
-                            Rulette.Rulette.Play(player);
+                            Roulette.Roulette.Play(player);
                             break;
 
                         case 2:
@@ -213,12 +242,17 @@ public class MainMenu
 
                     break;
             }
-            
-            
+
+
             if (player.Vesztett)
             {
-                running = false;
-                GameOverScreen();
+                running = GameOverScreen();
+
+                if (running)
+                {
+                    player.Zsetonok = 10000;
+                }
+                
             }
         } while (running);
     }

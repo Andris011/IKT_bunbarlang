@@ -1,6 +1,6 @@
-﻿namespace IKT_bunbarlang.Rulette;
+﻿namespace IKT_bunbarlang.Roulette;
 
-public class RuletteColors
+public class RouletteColors
 {
     public static string COLOR_RED = "\x1B[101m";
     public static string COLOR_GREEN = "\x1B[102m"; 

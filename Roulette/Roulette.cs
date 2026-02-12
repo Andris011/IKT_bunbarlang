@@ -1,8 +1,8 @@
 ﻿using IKT_bunbarlang.Utility;
 
-namespace IKT_bunbarlang.Rulette;
+namespace IKT_bunbarlang.Roulette;
 
-public class Rulette
+public class Roulette
 {
     public static int[] redNumbers = { 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36 };
 
@@ -132,7 +132,7 @@ public class Rulette
 
     private static string ColorString(string color, string text)
     {
-        return color + RuletteColors.COLOR_FG_WHITE + text + RuletteColors.COLOR_RESET;
+        return color + RouletteColors.COLOR_FG_WHITE + text + RouletteColors.COLOR_RESET;
     }
 
     public static int GetCellNumber(int row, int column)
@@ -174,22 +174,22 @@ public class Rulette
         {
             for (int j = 1; j < 13; j++)
             {
-                string color = RuletteColors.COLOR_BLACK;
+                string color = RouletteColors.COLOR_BLACK;
                 int number = GetCellNumber(i, j);
 
                 if (redNumbers.Contains(number))
                 {
-                    color = RuletteColors.COLOR_RED;
+                    color = RouletteColors.COLOR_RED;
                 }
 
                 if (highlightedSquares.Contains(number))
                 {
-                    color = RuletteColors.COLOR_GREEN;
+                    color = RouletteColors.COLOR_GREEN;
                 }
 
                 if (wonSquares.Contains(number))
                 {
-                    color = RuletteColors.COLOR_YELLOW;
+                    color = RouletteColors.COLOR_YELLOW;
                 }
 
                 board[i, j] = ColorString(color, $"{number}".PadLeft(2, ' '));
@@ -201,22 +201,22 @@ public class Rulette
 
         if (highlightedSquares.Contains(-1))
         {
-            board[1, 0] = ColorString(RuletteColors.COLOR_GREEN, "00");
+            board[1, 0] = ColorString(RouletteColors.COLOR_GREEN, "00");
         }
 
         if (highlightedSquares.Contains(0))
         {
-            board[2, 0] = ColorString(RuletteColors.COLOR_GREEN, "0");
+            board[2, 0] = ColorString(RouletteColors.COLOR_GREEN, "0");
         }
 
         if (wonSquares.Contains(-1))
         {
-            board[1, 0] = ColorString(RuletteColors.COLOR_YELLOW, "00");
+            board[1, 0] = ColorString(RouletteColors.COLOR_YELLOW, "00");
         }
 
         if (wonSquares.Contains(0))
         {
-            board[2, 0] = ColorString(RuletteColors.COLOR_YELLOW, "0");
+            board[2, 0] = ColorString(RouletteColors.COLOR_YELLOW, "0");
         }
 
         string[,] boardThirds = new string[,]
@@ -227,8 +227,8 @@ public class Rulette
         string[,] boardSixths = new string[,]
         {
             {
-                "1 : 18", "Páros", ColorString(RuletteColors.COLOR_RED, "Piros"),
-                ColorString(RuletteColors.COLOR_BLACK, " Fekete"), "Páratlan",
+                "1 : 18", "Páros", ColorString(RouletteColors.COLOR_RED, "Piros"),
+                ColorString(RouletteColors.COLOR_BLACK, " Fekete"), "Páratlan",
                 "19 : 36"
             }
         };
@@ -259,7 +259,7 @@ public class Rulette
         return int.TryParse(arg, out _);
     }
 
-    public static RuletteBet? ParseBet(string bet)
+    public static RouletteBet? ParseBet(string bet)
     {
         string[] arguments = bet.Split(' ');
         double betAmount = 0;
@@ -275,10 +275,10 @@ public class Rulette
         switch (command)
         {
             case "0":
-                return RuletteBet.StraightUpBet(0, betAmount);
+                return RouletteBet.StraightUpBet(0, betAmount);
 
             case "00":
-                return RuletteBet.StraightUpBet(-1, betAmount);
+                return RouletteBet.StraightUpBet(-1, betAmount);
 
             case "csak":
             case "sima":
@@ -291,7 +291,7 @@ public class Rulette
                 int number = int.Parse(arguments[1]);
                 if (number < 0 || number > 36) return null;
 
-                return RuletteBet.StraightUpBet(number, betAmount);
+                return RouletteBet.StraightUpBet(number, betAmount);
 
             case "split":
                 if (arguments.Length != 3) return null;
@@ -307,7 +307,7 @@ public class Rulette
 
                 if (distance != 1) return null;
 
-                return RuletteBet.SplitBet(splitA, splitB, betAmount);
+                return RouletteBet.SplitBet(splitA, splitB, betAmount);
 
             case "utca":
             case "street":
@@ -317,7 +317,7 @@ public class Rulette
                 int streetNumber = int.Parse(arguments[1]) - 1;
                 if (streetNumber < 0 || streetNumber > 11) return null;
 
-                return RuletteBet.StreetBet(streetNumber, betAmount);
+                return RouletteBet.StreetBet(streetNumber, betAmount);
 
             case "dutca":
             case "duplautca":
@@ -329,7 +329,7 @@ public class Rulette
                 int doubleStreetNumber = int.Parse(arguments[1]) - 1;
                 if (doubleStreetNumber < 0 || doubleStreetNumber > 10) return null;
 
-                return RuletteBet.DoubleStreetBet(doubleStreetNumber, betAmount);
+                return RouletteBet.DoubleStreetBet(doubleStreetNumber, betAmount);
 
             case "square":
             case "corner":
@@ -341,7 +341,7 @@ public class Rulette
                 int cornerNumber = int.Parse(arguments[1]) - 1;
                 if (cornerNumber < 0 || cornerNumber > 21) return null;
 
-                return RuletteBet.CornerBet(cornerNumber, betAmount);
+                return RouletteBet.CornerBet(cornerNumber, betAmount);
 
             case "column":
             case "oszlop":
@@ -351,7 +351,7 @@ public class Rulette
                 int columnNumber = int.Parse(arguments[1]) - 1;
                 if (columnNumber < 0 || columnNumber > 2) return null;
 
-                return RuletteBet.ColumnBet(columnNumber, betAmount);
+                return RouletteBet.ColumnBet(columnNumber, betAmount);
 
             case "dozen":
             case "tucat":
@@ -362,7 +362,7 @@ public class Rulette
                 int dozenNumber = int.Parse(arguments[1]) - 1;
                 if (dozenNumber < 0 || dozenNumber > 2) return null;
 
-                return RuletteBet.DozenBet(dozenNumber, betAmount);
+                return RouletteBet.DozenBet(dozenNumber, betAmount);
 
             case "half":
             case "fél":
@@ -372,27 +372,27 @@ public class Rulette
                 int halfNumber = int.Parse(arguments[1]) - 1;
                 if (halfNumber < 0 || halfNumber > 1) return null;
 
-                return RuletteBet.HalfBet(halfNumber, betAmount);
+                return RouletteBet.HalfBet(halfNumber, betAmount);
 
             case "even":
             case "páros":
-                return RuletteBet.ParityBet(true, betAmount);
+                return RouletteBet.ParityBet(true, betAmount);
 
             case "odd":
             case "páratlan":
-                return RuletteBet.ParityBet(false, betAmount);
+                return RouletteBet.ParityBet(false, betAmount);
 
             case "red":
             case "piros":
-                return RuletteBet.ColorBet(true, betAmount);
+                return RouletteBet.ColorBet(true, betAmount);
 
             case "black":
             case "fekete":
-                return RuletteBet.ColorBet(false, betAmount);
+                return RouletteBet.ColorBet(false, betAmount);
 
             case "snake":
             case "kígyó":
-                return RuletteBet.SnakeBet(betAmount);
+                return RouletteBet.SnakeBet(betAmount);
 
             default:
                 return null;
@@ -411,7 +411,7 @@ public class Rulette
         return arr;
     }
 
-    public static RuletteBet? PlaceBet(List<RuletteBet> bets, double balance)
+    public static RouletteBet? PlaceBet(List<RouletteBet> bets, double balance)
     {
         ConsoleKeyInfo key;
         string enteredCommand = "";
@@ -457,7 +457,7 @@ public class Rulette
             }
             else if (key.Key == ConsoleKey.Enter)
             {
-                RuletteBet? submitted = ParseBet(enteredCommand);
+                RouletteBet? submitted = ParseBet(enteredCommand);
 
                 if (submitted != null && submitted.Amount <= balance && submitted.Amount >= 10)
                 {
@@ -469,7 +469,7 @@ public class Rulette
                 return null;
             }
 
-            RuletteBet? parsed = ParseBet(enteredCommand);
+            RouletteBet? parsed = ParseBet(enteredCommand);
 
             Console.Write($"\x1B[1B\x1B[{enteredCommand.Length}D\x1B[0K\x1B[{enteredCommand.Length}C");
 
@@ -496,7 +496,7 @@ public class Rulette
         } while (true);
     }
 
-    public static double Porgetes(List<RuletteBet> bets)
+    public static double Porgetes(List<RouletteBet> bets)
     {
         Random random = new Random();
 
@@ -509,7 +509,7 @@ public class Rulette
 
         string winningNumber = "0"; 
 
-        string ball = ColorString(RuletteColors.COLOR_WHITE, "o");
+        string ball = ColorString(RouletteColors.COLOR_WHITE, "o");
 
         do
         {
@@ -572,7 +572,7 @@ public class Rulette
         int allBetCount = bets.Count;
         int wonBetCount = 0;
 
-        foreach (RuletteBet bet in bets)
+        foreach (RouletteBet bet in bets)
         {
             if (bet.Squares.Contains(winningParsed))
             {
@@ -594,7 +594,7 @@ public class Rulette
 
         int selectedIndex = 0;
 
-        foreach (RuletteBet bet in bets)
+        foreach (RouletteBet bet in bets)
         {
             for (int i = 0; i < bet.Squares.Length; i++)
             {
@@ -627,16 +627,16 @@ public class Rulette
 
     private static string ColorNumber(string number)
     {
-        string color = RuletteColors.COLOR_BLACK;
+        string color = RouletteColors.COLOR_BLACK;
 
         if (redNumbers.Contains(int.Parse(number)))
         {
-            color = RuletteColors.COLOR_RED;
+            color = RouletteColors.COLOR_RED;
         }
 
         if (number == " 0" || number == "00")
         {
-            color = RuletteColors.COLOR_GREEN;
+            color = RouletteColors.COLOR_GREEN;
         }
 
         return ColorString(color, number);
@@ -647,14 +647,14 @@ public class Rulette
         string[] opciok = { "Fogadás", "Pörgetés", "Kilépés" };
         int opcio;
 
-        List<RuletteBet> bets = new List<RuletteBet>();
+        List<RouletteBet> bets = new List<RouletteBet>();
 
         do
         {
             int[] selectedSquares = GetEmptyHighlighted();
             int selectedIndex = 0;
 
-            foreach (RuletteBet bet in bets)
+            foreach (RouletteBet bet in bets)
             {
                 for (int i = 0; i < bet.Squares.Length; i++)
                 {
@@ -690,7 +690,7 @@ public class Rulette
                 case 0:
                     if (bets.Count < 6)
                     {
-                        RuletteBet? bet = PlaceBet(bets, player.Zsetonok);
+                        RouletteBet? bet = PlaceBet(bets, player.Zsetonok);
                         Console.Clear();
 
                         if (bet != null)
@@ -713,7 +713,7 @@ public class Rulette
                     break;
 
                 case 2:
-                    foreach (RuletteBet unusedBet in bets)
+                    foreach (RouletteBet unusedBet in bets)
                     {
                         player.Zsetonok += unusedBet.Amount;
                     }

@@ -1,6 +1,6 @@
-﻿namespace IKT_bunbarlang.Rulette;
+﻿namespace IKT_bunbarlang.Roulette;
 
-public class RuletteBet
+public class RouletteBet
 {
     private int[] squares;
     private int payout;
@@ -26,36 +26,36 @@ public class RuletteBet
         get => squares;
     }
 
-    private RuletteBet(int[] squares, int payout, double amount)
+    private RouletteBet(int[] squares, int payout, double amount)
     {
         this.squares = squares;
         this.payout = payout;
         this.amount = amount;
     }
 
-    public static RuletteBet StraightUpBet(int square, double amount)
+    public static RouletteBet StraightUpBet(int square, double amount)
     {
-        return new RuletteBet(new int[] { square }, 35, amount);
+        return new RouletteBet(new int[] { square }, 35, amount);
     }
 
-    public static RuletteBet SplitBet(int square1, int square2, double amount)
+    public static RouletteBet SplitBet(int square1, int square2, double amount)
     {
-        return new RuletteBet(new int[] { square1, square2 }, 17, amount);
+        return new RouletteBet(new int[] { square1, square2 }, 17, amount);
     }
 
-    public static RuletteBet StreetBet(int street, double amount)
+    public static RouletteBet StreetBet(int street, double amount)
     {
         int[] squares = new int[3];
 
         for (int i = 0; i < 3; i++)
         {
-            squares[i] = Rulette.GetCellNumber(i, street + 1);
+            squares[i] = Roulette.GetCellNumber(i, street + 1);
         }
 
-        return new RuletteBet(squares, 11, amount);
+        return new RouletteBet(squares, 11, amount);
     }
 
-    public static RuletteBet DoubleStreetBet(int street, double amount)
+    public static RouletteBet DoubleStreetBet(int street, double amount)
     {
         int[] squares = new int[6];
         int index = 0;
@@ -64,40 +64,40 @@ public class RuletteBet
         {
             for (int i = 0; i < 3; i++)
             {
-                squares[index++] = Rulette.GetCellNumber(i, street + j + 1);
+                squares[index++] = Roulette.GetCellNumber(i, street + j + 1);
             }
         }
 
-        return new RuletteBet(squares, 5, amount);
+        return new RouletteBet(squares, 5, amount);
     }
 
-    public static RuletteBet CornerBet(int topLeftCorner, double amount)
+    public static RouletteBet CornerBet(int topLeftCorner, double amount)
     {
         int[] squares = new int[4];
         int row = topLeftCorner / 12;
         int col = topLeftCorner % 12;
         
-        squares[0] = Rulette.GetCellNumber(row, col);
-        squares[1] = Rulette.GetCellNumber(row, col + 1);
-        squares[2] = Rulette.GetCellNumber(row + 1, col);
-        squares[3] = Rulette.GetCellNumber(row + 1, col + 1);
+        squares[0] = Roulette.GetCellNumber(row, col);
+        squares[1] = Roulette.GetCellNumber(row, col + 1);
+        squares[2] = Roulette.GetCellNumber(row + 1, col);
+        squares[3] = Roulette.GetCellNumber(row + 1, col + 1);
         
-        return new RuletteBet(squares, 8, amount);
+        return new RouletteBet(squares, 8, amount);
     }
 
-    public static RuletteBet ColumnBet(int row, double amount)
+    public static RouletteBet ColumnBet(int row, double amount)
     {
         int[] squares = new int[12];
 
         for (int i = 1; i < 13; i++)
         {
-            squares[i - 1] = Rulette.GetCellNumber(row, i);
+            squares[i - 1] = Roulette.GetCellNumber(row, i);
         }
 
-        return new RuletteBet(squares, 2, amount);
+        return new RouletteBet(squares, 2, amount);
     }
 
-    public static RuletteBet DozenBet(int third, double amount)
+    public static RouletteBet DozenBet(int third, double amount)
     {
         int[] squares = new int[3 * 4];
         int index = 0;
@@ -107,10 +107,10 @@ public class RuletteBet
             squares[index++] = i;
         }
 
-        return new RuletteBet(squares, 2, amount);
+        return new RouletteBet(squares, 2, amount);
     }
 
-    public static RuletteBet HalfBet(int half, double amount)
+    public static RouletteBet HalfBet(int half, double amount)
     {
         int[] squares = new int[3 * 6];
         int index = 0;
@@ -120,10 +120,10 @@ public class RuletteBet
             squares[index++] = i;
         }
 
-        return new RuletteBet(squares, 1, amount);
+        return new RouletteBet(squares, 1, amount);
     }
 
-    public static RuletteBet ParityBet(bool even, double amount)
+    public static RouletteBet ParityBet(bool even, double amount)
     {
         int[] squares = new int[18];
         int index = 0;
@@ -134,32 +134,32 @@ public class RuletteBet
             squares[index++] = i;
         }
 
-        return new RuletteBet(squares, 1, amount);
+        return new RouletteBet(squares, 1, amount);
     }
 
-    public static RuletteBet ColorBet(bool red, double amount)
+    public static RouletteBet ColorBet(bool red, double amount)
     {
         int[] squares = new int[18];
         int index = 0;
 
         for (int i = 1; i <= 36; i++)
         {
-            if (Rulette.redNumbers.Contains(i) && red)
+            if (Roulette.redNumbers.Contains(i) && red)
             {
                 squares[index++] = i;
             }
-            else if (!Rulette.redNumbers.Contains(i) && !red)
+            else if (!Roulette.redNumbers.Contains(i) && !red)
             {
                 squares[index++] = i;
             }
         }
 
-        return new RuletteBet(squares, 1, amount);
+        return new RouletteBet(squares, 1, amount);
     }
 
-    public static RuletteBet SnakeBet(double amount)
+    public static RouletteBet SnakeBet(double amount)
     {
-        return new RuletteBet(new int[] { 1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34 }, 2, amount);
+        return new RouletteBet(new int[] { 1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34 }, 2, amount);
     }
 
     public override string ToString()
@@ -184,6 +184,6 @@ public class RuletteBet
         }
 
         return
-            $"> {amount} összeg -> {amount + amount * payout} nyeremény\n> {RuletteColors.COLOR_FG_GRAY}{squareString}{RuletteColors.COLOR_RESET}";
+            $"> {amount} összeg -> {amount + amount * payout} nyeremény\n> {RouletteColors.COLOR_FG_GRAY}{squareString}{RouletteColors.COLOR_RESET}";
     }
 }

@@ -33,12 +33,12 @@ public class Player
 
     public void Nyer(double osszeg)
     {
-        this.zsetonok += osszeg;
+        Zsetonok += osszeg;
     }
 
     public void Veszit(double osszeg)
     {
-        this.zsetonok -= osszeg;
+        Zsetonok -= osszeg;
     }
 
 
