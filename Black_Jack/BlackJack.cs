@@ -276,7 +276,8 @@ public class BlackJack
 
             Console.Clear();
             Console.WriteLine(kiiras);
-
+            
+            
             if (kartyakerteke(playerkartyai) == 21 && playerkartyai.Count == 2 && kartyakerteke(dealerkartyai) != 21)
             {
                 Thread.Sleep(500);
@@ -289,7 +290,7 @@ public class BlackJack
                 Thread.Sleep(500);
             }
 
-            if (kartyakerteke(playerkartyai) > 21)
+            else if (kartyakerteke(playerkartyai) > 21)
             {
                 Thread.Sleep(500);
                 Console.WriteLine();
